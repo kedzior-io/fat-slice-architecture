@@ -1,0 +1,60 @@
+﻿using RichHandlerArchitecture.Core.Constants;
+using RichHandlerArchitecture.Domain;
+using RichHandlerArchitecture.Domain.Discounts;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System.Runtime.CompilerServices;
+
+namespace RichHandlerArchitecture.Infrastructure.Persistence;
+
+public interface IDbContext : IDisposable
+{
+    public DbSet<Product> Products { get; set; }
+    public DbSet<Customer> Customers { get; set; }
+    public DbSet<Address> Addresses { get; set; }
+    public DbSet<Order> Orders { get; set; }
+    public DbSet<OrderItem> OrderItems { get; set; }
+    public DbSet<Discount> Discounts { get; set; }
+    public ChangeTracker Changes { get; }
+
+    Task<int> SaveChangesAsync(CancellationToken cancellationToken = default, [CallerMemberName] string? callerFunction = null, [CallerFilePath] string? callerFile = null);
+}
+
+public class ApplicationDbContext(DbContextOptions options) : DbContext(options), IDbContext
+{
+    public DbSet<Product> Products { get; set; }
+    public DbSet<Customer> Customers { get; set; }
+    public DbSet<Address> Addresses { get; set; }
+    public DbSet<Order> Orders { get; set; }
+    public DbSet<OrderItem> OrderItems { get; set; }
+    public DbSet<Discount> Discounts { get; set; }
+    public ChangeTracker Changes => ChangeTracker;
+
+    protected override void OnConfiguring(DbContextOptionsBuilder builder)
+    {
+        if (!builder.IsConfigured)
+        {
+            builder.UseSqlite(ConnectionStrings.Sqlite);
+        }
+    }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        // The entity type 'OrderItem' has composite key '{'OrderId', 'Id'}' which is configured to use generated values. SQLite does not support generated values on composite keys.
+
+        modelBuilder.Entity<Order>().OwnsOne(x => x.Address);
+        modelBuilder.Entity<Order>().OwnsMany(x => x.Items);
+
+        /* Id is GUID generated in the code, let EF know.
+            https://github.com/dotnet/efcore/issues/18055#issuecomment-545678535
+        */
+        modelBuilder.Entity<Address>().Property(e => e.Id).ValueGeneratedNever();
+
+        base.OnModelCreating(modelBuilder);
+    }
+
+    public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default, [CallerMemberName] string? callerFunction = null, [CallerFilePath] string? callerFile = null)
+    {
+        return await base.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+    }
+}

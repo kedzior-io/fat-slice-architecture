@@ -11,23 +11,23 @@ EXPOSE 8080
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["src/AstroArchitecture.Api/AstroArchitecture.Api.csproj", "src/AstroArchitecture.Api/"]
-COPY ["src/AstroArchitecture.Handlers/AstroArchitecture.Handlers.csproj", "src/AstroArchitecture.Handlers/"]
-COPY ["src/AstroArchitecture.Infrastructure/AstroArchitecture.Infrastructure.csproj", "src/AstroArchitecture.Infrastructure/"]
-COPY ["src/AstroArchitecture.Core/AstroArchitecture.Core.csproj", "src/AstroArchitecture.Core/"]
-COPY ["src/AstroArchitecture.Domain/AstroArchitecture.Domain.csproj", "src/AstroArchitecture.Domain/"]
-RUN dotnet restore "./src/AstroArchitecture.Api/AstroArchitecture.Api.csproj"
+COPY ["src/RichHandlerArchitecture.Api/RichHandlerArchitecture.Api.csproj", "src/RichHandlerArchitecture.Api/"]
+COPY ["src/RichHandlerArchitecture.Handlers/RichHandlerArchitecture.Handlers.csproj", "src/RichHandlerArchitecture.Handlers/"]
+COPY ["src/RichHandlerArchitecture.Infrastructure/RichHandlerArchitecture.Infrastructure.csproj", "src/RichHandlerArchitecture.Infrastructure/"]
+COPY ["src/RichHandlerArchitecture.Core/RichHandlerArchitecture.Core.csproj", "src/RichHandlerArchitecture.Core/"]
+COPY ["src/RichHandlerArchitecture.Domain/RichHandlerArchitecture.Domain.csproj", "src/RichHandlerArchitecture.Domain/"]
+RUN dotnet restore "./src/RichHandlerArchitecture.Api/RichHandlerArchitecture.Api.csproj"
 COPY . .
-WORKDIR "/src/src/AstroArchitecture.Api"
-RUN dotnet build "./AstroArchitecture.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
+WORKDIR "/src/src/RichHandlerArchitecture.Api"
+RUN dotnet build "./RichHandlerArchitecture.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # This stage is used to publish the service project to be copied to the final stage
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./AstroArchitecture.Api.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./RichHandlerArchitecture.Api.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 # This stage is used in production or when running from VS in regular mode (Default when not using the Debug configuration)
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "AstroArchitecture.Api.dll"]
+ENTRYPOINT ["dotnet", "RichHandlerArchitecture.Api.dll"]
