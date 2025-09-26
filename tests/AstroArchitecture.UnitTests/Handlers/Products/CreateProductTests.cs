@@ -1,4 +1,4 @@
-﻿namespace AstroArchitecture.UnitTests.Handlers.Orders;
+﻿namespace FatSliceArchitecture.UnitTests.Handlers.Orders;
 
 public class CreateProductTests
 {

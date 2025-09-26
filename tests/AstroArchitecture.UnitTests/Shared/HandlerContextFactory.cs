@@ -1,4 +1,4 @@
-﻿namespace AstroArchitecture.UnitTests.Shared;
+﻿namespace FatSliceArchitecture.UnitTests.Shared;
 
 public static class HandlerContextFactory
 {
