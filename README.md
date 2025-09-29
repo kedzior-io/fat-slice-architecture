@@ -1,4 +1,4 @@
-﻿# Astro Architecture Solution Template for .NET 9
+﻿# Fat Slice Architecture Solution Template for .NET 9
 
 This solution template provides a streamlined and modern way to build ASP.NET Core Web APIs by combining CQRS (Command Query Responsibility Segregation), DDD (Domain-Driven Design), and Vertical Slice Architecture. It’s designed to be simple, consistent, and testable while minimizing setup overhead.
 
@@ -27,7 +27,7 @@ Some people think CQRS and Vertical Slice Architecture are too complicated and t
 
 ## Installation & Running
 
-1. The project creates SQLite database on the runtime, go to [`AstroArchitecture.Core.Constants.ConnectionStrings`](https://github.com/kedzior-io/astro-architecture/blob/main/src/AstroArchitecture.Core/Constants/ConnectionStrings.cs) and set the desired location of your SQLite. Use location the runtime can write to. 
+1. The project creates SQLite database on the runtime, go to [`FatSliceArchitecture.Core.Constants.ConnectionStrings`](https://github.com/kedzior-io/astro-architecture/blob/main/src/FatSliceArchitecture.Core/Constants/ConnectionStrings.cs) and set the desired location of your SQLite. Use location the runtime can write to. 
 
 2. Once launched it will pop up swagger page: `/swagger/index.html`
 

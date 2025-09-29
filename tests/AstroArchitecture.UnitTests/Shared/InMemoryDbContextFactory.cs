@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
-namespace AstroArchitecture.UnitTests.Shared;
+namespace FatSliceArchitecture.UnitTests.Shared;
 
 public static class InMemoryDbContextFactory
 {
