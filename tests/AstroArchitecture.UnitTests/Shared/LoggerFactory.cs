@@ -1,6 +1,6 @@
 ﻿using Serilog;
 
-namespace AstroArchitecture.UnitTests.Shared;
+namespace FatSliceArchitecture.UnitTests.Shared;
 
 public static class LoggerFactory
 {
