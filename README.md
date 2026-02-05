@@ -1,4 +1,4 @@
-﻿# Fat Slice Architecture Solution Template for .NET 9
+﻿# Fat Slice Architecture Solution Template for .NET 10
 
 This solution template provides a streamlined and modern way to build ASP.NET Core Web APIs by combining CQRS (Command Query Responsibility Segregation), DDD (Domain-Driven Design), and Vertical Slice Architecture. It’s designed to be simple, consistent, and testable while minimizing setup overhead.
 
